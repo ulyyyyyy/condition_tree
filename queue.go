@@ -2,23 +2,23 @@ package condition_tree
 
 import "errors"
 
-type queue []string
+type conditionQueue []condition
 
-func (q *queue) isEmpty() (err error) {
+func (q *conditionQueue) isEmpty() (err error) {
 	if len(*q) == 0 {
-		return errors.New("queue size is 0")
+		return errors.New("conditionQueue size is 0")
 	}
 	return nil
 }
 
-func (q *queue) Push(str string) {
-	*q = append(*q, str)
+func (q *conditionQueue) Push(con condition) {
+	*q = append(*q, con)
 }
 
-func (q *queue) Pop() (str string, err error) {
+func (q *conditionQueue) Pop() (con condition, err error) {
 	err = q.isEmpty()
 	if err != nil {
-		return "", err
+		return condition{}, err
 	}
 	index := 0
 	element := (*q)[index]
@@ -26,9 +26,9 @@ func (q *queue) Pop() (str string, err error) {
 	return element, nil
 }
 
-func (q *queue) getLast() (str string, err error) {
+func (q *conditionQueue) getLast() (con condition, err error) {
 	if len(*q) == 0 {
-		return "", errors.New("queue size is 0")
+		return condition{}, errors.New("conditionQueue size is 0")
 	}
 	index := len(*q)
 	return (*q)[index-1], nil
